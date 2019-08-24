@@ -19,7 +19,7 @@ public class Controller implements Initializable {
     @FXML
     Label id, name, email, language, isConnected,storedProcedure;
     @FXML
-    Button nextBtn, previousBtn, lastBtn, firstBtn, updateBtn, delBtn, insertBtn;
+    Button nextBtn, previousBtn, lastBtn, firstBtn, updateBtn, delBtn, insertBtn, refreshbtn;
     @FXML
     TextField userName, userEmail, userLang;
     @FXML private TableView<StudentMaster> table;
@@ -234,5 +234,25 @@ public class Controller implements Initializable {
             System.out.println(e.getMessage());
         }
         buildData();
+    }
+    @FXML
+    public void refreshbtn_Click(ActionEvent event){
+        data = FXCollections.observableArrayList();
+        try {
+            String sql = "Select * from students";
+            ResultSet rs = connection.createStatement().executeQuery(sql);
+            while (rs.next()) {
+                StudentMaster studentObj = new StudentMaster();
+                studentObj.userId.set(rs.getInt("id"));
+                studentObj.userName.set(rs.getString("first_name"));
+                studentObj.userEmail.set(rs.getString("email"));
+                studentObj.userLang.set(rs.getString("language_chosen"));
+                data.add(studentObj);
+            }
+            table.setItems(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error on Building Data");
+        }
     }
 }

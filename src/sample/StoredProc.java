@@ -31,7 +31,7 @@ public class StoredProc implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/StudentsDemo", "root", "bawabawa1");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/studentsdemo?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "staind0323");
 
             myStmt = connection.prepareCall("{call getAllTeachers()}");
             myStmt.execute();
